@@ -1,10 +1,10 @@
 {
-  "name": "trap-walker",
+  "name": "trap-quest",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "bin":{
-    "trap-walker": "index.js"
+    "trap-quest": "index.js"
   },
   "scripts": {
     "fix": "prettier --write . && eslint --fix .",
