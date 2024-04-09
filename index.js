@@ -8,6 +8,7 @@ async function main() {
   const map = new Map();
   const user = new User();
   const userChoices = [];
+  console.log("\nWelcome to the maze!\nWatch out for traps.\n");
   console.log("The exit is located at", map.goal, "\n");
   map.traps.push(map.trap);
   map.putTrap(5);
@@ -103,5 +104,4 @@ async function getUserChoice(map) {
   }
 }
 
-console.log("\nWelcome to the maze!\nWatch out for traps.\n");
 main();
