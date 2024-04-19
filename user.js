@@ -1,22 +1,10 @@
 export class User {
-  constructor(x = 0, y = 0, maxX = 7, maxY = 7, minX = -3, minY = -3) {
+  constructor() {
     this.direction = "north";
     this.DIRECTION = ["north", "east", "south", "west"];
-    this.point = { x, y };
-    this.max = { x: maxX, y: maxY };
-    this.min = { x: minX, y: minY };
-  }
-
-  setY(number) {
-    this.point.y = number;
-  }
-
-  setX(number) {
-    this.point.x = number;
-  }
-
-  setDirection(direction) {
-    this.direction = direction;
+    this.point = { x: 0, y: 0 };
+    this.max = { x: 7, y: 7 };
+    this.min = { x: -3, y: -3 };
   }
 
   faceToDirection(choice) {
@@ -34,22 +22,22 @@ export class User {
           this.DIRECTION[(this.DIRECTION.indexOf(this.direction) + 2) % 4];
         break;
     }
-    return this.walk();
+    return this.#walk();
   }
 
-  walk() {
+  #walk() {
     switch (this.direction) {
       case "north":
-        this.setY(this.point.y + 1);
+        this.point.y += 1;
         break;
       case "south":
-        this.setY(this.point.y - 1);
+        this.point.y -= 1;
         break;
       case "east":
-        this.setX(this.point.x + 1);
+        this.point.x += 1;
         break;
       case "west":
-        this.setX(this.point.x - 1);
+        this.point.x -= 1;
         break;
     }
     if (
