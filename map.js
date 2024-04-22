@@ -2,7 +2,7 @@ export class Map {
   constructor() {
     this.goal = { x: 3, y: 3 };
     this.traps = [];
-    this.trap = { x: this.goal.x - 1, y: this.goal.y - 1 };
+    this.trap = { x: this.goal.x - 1, y: this.goal.y - 1 }; //スタートとゴールの直線上に1つ罠を用意
     this.traps.push(this.trap);
     this.putTrap();
   }
@@ -22,7 +22,10 @@ export class Map {
       const number = 3;
       newTrap.x = this.goal.x - Math.floor(Math.random() * number);
       newTrap.y = this.goal.y - Math.floor(Math.random() * number);
-    } while ((newTrap.x === this.goal.x && newTrap.y === this.goal.y) || (newTrap.x === 0 && newTrap.y === 0));
+    } while (
+      (newTrap.x === this.goal.x && newTrap.y === this.goal.y) ||
+      (newTrap.x === 0 && newTrap.y === 0)
+    );
 
     if (this.traps.find(({ x, y }) => x === newTrap.x && y === newTrap.y)) {
       return false;

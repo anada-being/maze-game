@@ -10,36 +10,36 @@ async function main() {
   const userChoices = [];
   console.log("\nWelcome to the maze!\nWatch out for traps.\n");
   console.log("The exit is located at", map.goal, "\n");
-  let count = 3;
+  let count = 3; //難易度調整（（2,2）にたどり着く前に罠の場所を知らせる）
 
   while (!isGameFinshed(userChoices, map, user)) {
     map.setChoices();
-    try {
-      const choice = await getUserChoice(map);
-      if (!choice) {
-        return process.exit();
+    const choice = async (map) => {
+      try {
+        return await getUserChoice(map);
+      } catch (err) {
+        console.log("\nHope to see you again for another try!\n");
+        process.exit();
       }
-      count++;
-      userChoices.push(choice);
-      if (userChoices.length === 5) {
-        userChoices.shift();
-        if (count % 3 === 0) {
-          const result = map.putTrap();
-          if (result) {
-            console.log("\nI have a bad feeling about something.");
-          }
-        }
-      }
-      if (count === 5) {
-        console.log("Beware! There might be traps nearby:", map.traps);
-        count = 0;
-      }
-      user.point = user.faceToDirection(choice);
-      console.log("You are facing", user.direction);
-    } catch (err) {
-      console.log("\nHope to see you again for another try!\n");
-      process.exit();
+    };
+    count++;
+    const userChoice = await choice(map);
+    userChoices.push(userChoice);
+    if (userChoices.length === 5) {
+      userChoices.shift();
     }
+    if (count % 3 === 0) {
+      const result = map.putTrap();
+      if (result) {
+        console.log("\nI have a bad feeling about something.");
+      }
+    }
+    if (count === 5) {
+      console.log("Beware! There might be traps nearby:", map.traps);
+      count = 0;
+    }
+    user.point = user.faceToDirection(userChoice);
+    console.log("You are facing", user.direction);
   }
   console.log("\nHope to see you again for another try!\n");
 }
@@ -52,6 +52,7 @@ function isGameFinshed(userChoices, map, user) {
   );
 }
 
+// 一周すると無限ループの罠にかかるという仕様
 function isLoop(choices) {
   if (
     choices.length !== 4 ||
